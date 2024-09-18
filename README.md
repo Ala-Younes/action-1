@@ -28,3 +28,7 @@
 ![concurrencyFalse](images/concurrencyFalse.png)
 
 **Important** Sometimes we can have memory or timeout problems so we may need to add timeout-minut that way we are sure our workflow does not take infinity time
+
+### A default behavior on the matrix strategy, if a job failes the other ones will stop running.
+- For example we know that alpine does not work on windows, so can exclude it from the matrix
+- User defines the key values as he wants, we can also define how many jobs on parallel and if a job fails continue or not.
