@@ -6,3 +6,9 @@
 - Using the github runner each job is run on a separate VM
     - A default behavior is that all jobs runs on parallel and do not depend one on another
     - Use **needs** to identify any jobs that must complete successfully before this job will run
+![needs sequence](sequence_jobs.png)
+
+- If needs is used and one job depends on another, if one fails the next one will be skipped
+
+- By default Files are not shared between jobs
+    - So we need yo use **artifacts** to upload a files from a job to another and than download it whare we need it.
