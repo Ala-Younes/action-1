@@ -10,17 +10,8 @@ jobs:
             - name: Checkout Repo
               uses: actions/checkout@v4
 
-            - name: Install Cosway program
-              run: sudo apt-get update && sudo apt-get install cowsay -y
-
-            - name: Execute Cosway CMD
-              run: cowsay -f dragon "Run for cover, I am A Dragon....RAWR" >> dragon.txt
-
-            - name: Test File exists
-              run: grep -i "dragon" dragon.txt
-
-            - name: Read file
-              run: cat dragon.txt
-
-            - name: Read file
+            - name: List Repo Files
               run: ls -ltra
+
+            - name: Executing Shell Script
+              run: ./ascii-script.sh
