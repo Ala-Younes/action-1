@@ -23,3 +23,6 @@
 ### Without concurrency if a workflow is stuck and we need to run another one than the first will always keep running -> We will loose time (2000 minutes free ...)
 
 ![concurrency](images/concurrency.png)
+
+- If concurrency  = false workflow triggered after the other will wait for the first one in order to be completed:
+![concurrencyFalse](images/concurrencyFalse.png)
