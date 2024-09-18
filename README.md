@@ -6,7 +6,7 @@
 - Using the github runner each job is run on a separate VM
     - A default behavior is that all jobs runs on parallel and do not depend one on another
     - Use **needs** to identify any jobs that must complete successfully before this job will run
-![needs sequence](sequence_jobs.png)
+![needs sequence](images/sequence_jobs.png)
 
 - If needs is used and one job depends on another, if one fails the next one will be skipped
 
@@ -18,6 +18,8 @@
 ### We can define envirenment variables on three levels (Step level, Job level and Workflow level)
 
 ### We can trigger our workflow using many triggers for example : 
-![workflow-dispatch](workflow_dispatch.png)
+![workflow-dispatch](images/workflow_dispatch.png)
 
 ### Without concurrency if a workflow is stuck and we need to run another one than the first will always keep running -> We will loose time (2000 minutes free ...)
+
+![concurrency](images/concurrency.png)
