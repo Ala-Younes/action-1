@@ -26,3 +26,5 @@
 
 - If concurrency  = false workflow triggered after the other will wait for the first one in order to be completed:
 ![concurrencyFalse](images/concurrencyFalse.png)
+
+**Important** Sometimes we can have memory or timeout problems so we may need to add timeout-minut that way we are sure our workflow does not take infinity time
