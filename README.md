@@ -32,3 +32,5 @@
 ### A default behavior on the matrix strategy, if a job failes the other ones will stop running.
 - For example we know that alpine does not work on windows, so can exclude it from the matrix
 - User defines the key values as he wants, we can also define how many jobs on parallel and if a job fails continue or not.
+
+### We can use filters in order to control on which condition our workflow will be executed
