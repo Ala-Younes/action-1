@@ -32,3 +32,10 @@
 ### A default behavior on the matrix strategy, if a job failes the other ones will stop running.
 - For example we know that alpine does not work on windows, so can exclude it from the matrix
 - User defines the key values as he wants, we can also define how many jobs on parallel and if a job fails continue or not.
+
+### In this example we will see how to trigger a github action (pull request + modifying different file from README.md)
+![filter-for-pull-request](images/filter-for-pull-request.png)
+![workflow-for-pull-request](images/workflow-for-pull-request.png)
+
+### There are multiple ways to skip the CI workflow
+[Skipping the CI by putting in the commit message the good msg](https://docs.github.com/en/actions/managing-workflow-runs-and-deployments/managing-workflow-runs/skipping-workflow-runs) !!
