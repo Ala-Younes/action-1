@@ -16,3 +16,8 @@
 - Artifact and log retention by default is 90days, can be changed (Settings -> Actions -> Retention days)
 
 ### We can define envirenment variables on three levels (Step level, Job level and Workflow level)
+
+### We can trigger our workflow using many triggers for example : 
+![workflow-dispatch](workflow_dispatch.png)
+
+### Without concurrency if a workflow is stuck and we need to run another one than the first will always keep running -> We will loose time (2000 minutes free ...)
