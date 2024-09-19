@@ -1,34 +1,97 @@
-# Exploring GitHub Actions
+# Comprehensive Guide to GitHub Actions
 
-- By Default actions are running on another machine that has no access to our github directory
-- The pipe used to run a sequence of cmds ( | )
-- In order to execute a shell script within your workflow, verify that the script have permission to be executed
-- Using the github runner each job is run on a separate VM
-    - A default behavior is that all jobs runs on parallel and do not depend one on another
-    - Use **needs** to identify any jobs that must complete successfully before this job will run
-![needs sequence](images/sequence_jobs.png)
+## Basic Concepts
 
-- If needs is used and one job depends on another, if one fails the next one will be skipped
+1. **Execution Environment**
+   - By default, actions run on separate machines without direct access to your GitHub repository.
+   - Each job in a workflow runs on a separate virtual machine (VM).
 
-- By default Files are not shared between jobs
-    - So we need yo use **artifacts** to upload a files from a job to another and than download it whare we need it. [Upload](https://github.com/marketplace/actions/upload-a-build-artifact)! [Download](https://github.com/marketplace/actions/download-a-build-artifact)!
+2. **Job Execution**
+   - Default behavior: All jobs run in parallel.
+   - To create dependencies between jobs, use the `needs` keyword.
 
-- Artifact and log retention by default is 90days, can be changed (Settings -> Actions -> Retention days)
+3. **File Sharing Between Jobs**
+   - Files are not automatically shared between jobs.
+   - Use artifacts to transfer files between jobs.
 
-### We can define envirenment variables on three levels (Step level, Job level and Workflow level)
+4. **Shell Commands**
+   - Use the pipe (`|`) to run a sequence of commands.
+   - Ensure shell scripts have execution permissions before running them in your workflow.
 
-### We can trigger our workflow using many triggers for example : 
-![workflow-dispatch](images/workflow_dispatch.png)
+## Workflow Configuration
 
-### Without concurrency if a workflow is stuck and we need to run another one than the first will always keep running -> We will loose time (2000 minutes free ...)
+### Job Dependencies
+- Use `needs` to specify jobs that must complete successfully before another job runs.
+- If a job fails, dependent jobs will be skipped.
 
-![concurrency](images/concurrency.png)
+![Job Sequence with 'needs'](images/sequence_jobs.png)
 
-- If concurrency  = false workflow triggered after the other will wait for the first one in order to be completed:
-![concurrencyFalse](images/concurrencyFalse.png)
+### Artifacts
+- Use artifacts to share files between jobs.
+- [Upload Artifact Action](https://github.com/marketplace/actions/upload-a-build-artifact)
+- [Download Artifact Action](https://github.com/marketplace/actions/download-a-build-artifact)
 
-**Important** Sometimes we can have memory or timeout problems so we may need to add timeout-minut that way we are sure our workflow does not take infinity time
+### Retention Policies
+- Default artifact and log retention: 90 days
+- Can be changed in Settings -> Actions -> Retention days
 
-### A default behavior on the matrix strategy, if a job failes the other ones will stop running.
-- For example we know that alpine does not work on windows, so can exclude it from the matrix
-- User defines the key values as he wants, we can also define how many jobs on parallel and if a job fails continue or not.
+### Environment Variables
+Define environment variables at three levels:
+1. Workflow level
+2. Job level
+3. Step level
+
+### Workflow Triggers
+Multiple triggers available, including:
+- `workflow_dispatch` for manual triggering
+
+![Workflow Dispatch Trigger](images/workflow_dispatch.png)
+
+### Concurrency
+- Without concurrency, multiple workflow runs can occur simultaneously.
+- With `concurrency: false`, subsequent triggers wait for the current run to complete.
+
+![Concurrency False](images/concurrencyFalse.png)
+
+**Important**: Consider adding `timeout-minutes` to prevent infinite runs and manage resources effectively.
+
+## Matrix Strategy
+
+- Default behavior: If a job fails, other matrix jobs stop running.
+- You can exclude specific combinations or entire keys from the matrix.
+
+### Exclusion Examples
+
+1. Excluding a specific combination:
+```yaml
+matrix:
+  os: [ubuntu-latest, macos-12, windows-latest]
+  py-version: [3.7, 3.8, 3.9]
+  exclude:
+    - os: macos-12
+      py-version: 3.9
+```
+
+2. Excluding all combinations with specific values:
+```yaml
+matrix:
+  os: [ubuntu-latest, macos-12, windows-latest]
+  py-version: [3.7, 3.8, 3.9]
+  exclude:
+    - os: macos-12
+    - py-version: 3.9
+```
+
+### Additional Matrix Options
+- Control the number of parallel jobs
+- Continue on failure option
+
+## Best Practices
+
+1. **Resource Management**: Use `timeout-minutes` to prevent long-running jobs from consuming excessive resources.
+2. **Artifact Management**: Regularly clean up unnecessary artifacts to save storage.
+3. **Concurrency Control**: Use concurrency settings to manage workflow execution and prevent resource conflicts.
+4. **Matrix Optimization**: Carefully plan your matrix strategy to balance thoroughness with efficiency.
+5. **Environment Variables**: Use appropriate scoping for environment variables to maintain security and clarity.
+
+Remember to consult the [official GitHub Actions documentation](https://docs.github.com/en/actions) for the most up-to-date information and advanced features.
